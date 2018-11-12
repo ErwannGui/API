@@ -1,0 +1,25 @@
+{
+  "name": "todolistapi",
+  "version": "1.0.0",
+  "description": "None",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.3.9",
+    "nodemon": "^1.18.5",
+    "request": "^2.88.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^7.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "REST",
+    "api"
+  ],
+  "author": "Erwann GUILLEVIC",
+  "license": "ISC"
+}
