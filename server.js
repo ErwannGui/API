@@ -7,9 +7,45 @@ var express = require('express'),
 
 var fs = require('fs')
 var morgan = require('morgan')
-var cors = require('cors')
+//var cors = require('cors')
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-app.use(cors())
+io.on('connection', (socket) => {
+  
+  socket.on('disconnect', function(){
+    io.emit('users-changed', {user: socket.nickname, event: 'left'});
+  });
+ 
+  socket.on('set-nickname', (nickname) => {
+    socket.nickname = nickname;
+    io.emit('users-changed', {user: nickname, event: 'joined'});    
+  });
+
+  socket.on('private-message', (message) => {
+    io.emit('private', {text: message.text, from: socket.nickname, target: message.target, type: 'private', created: new Date()});
+  });
+  
+  socket.on('add-message', (message) => {
+    io.emit('message', {text: message.text, from: socket.nickname, type: 'public', created: new Date()});    
+  });
+
+  socket.on('room', function(room) {
+    socket.join(room);
+    
+	});
+});
+
+//app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:8100");
+  res.header("Access-Control-Allow-Credentials", "true");
+  //res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
+  next();
+});
+
 
 // mongoose instance connection url connection
 global.__root = __dirname + '/';
@@ -18,7 +54,13 @@ var logFile = fs.createWriteStream('./api.log', {flags: 'a'});
 
 mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost:27017/ionic');
-mongoose.connect('mongodb+srv://ionic:ionic@cours-8uau7.mongodb.net/ionic', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://ionic:ionic@cours-8uau7.mongodb.net/ionic', { useNewUrlParser: true })
+.then( data => {
+	console.log('Connected to Mongo cluster !');
+})
+.catch(err => {
+	console.error(err);
+});
 
 /*var MongoClient = require('mongodb').MongoClient;
 
@@ -44,11 +86,11 @@ app.use('/api/auth', AuthController);
 //app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(function(req, res) {
+app.use(function(req, res) {	
     res.status(404).send({url: req.originalUrl + ' not found'})
 });
 
-app.listen(port);
+http.listen(port);
 
 
 console.log('API running on port: ' + port);
