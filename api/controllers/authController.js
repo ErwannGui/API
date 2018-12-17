@@ -26,7 +26,7 @@ router.post('/login', function(req, res) {
     // check if the password is valid
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-
+    
     // if user is found and password is valid
     // create a token
     var token = jwt.sign({ id: user._id }, config.secret, {
