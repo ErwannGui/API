@@ -13,3 +13,5 @@ exports.connect = function(username, password) {
 		console.error(err);
 	});
 };
+
+/* Ajout de la fonction d'authentification */
