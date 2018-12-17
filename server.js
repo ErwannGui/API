@@ -31,7 +31,7 @@ function decrypt(text){
   return dec;
 }
  
-var hw = encrypt("hello world")
+var hw = encrypt("hello world");
 // outputs hello world
 console.log(hw+' : '+decrypt(hw));
 
