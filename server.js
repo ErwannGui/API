@@ -40,20 +40,20 @@ console.log(hw+' : '+decrypt(hw));
 io.on('connection', (socket) => {
   
   socket.on('disconnect', function(){
-    io.emit('users-changed', {user: encrypt(socket.nickname), event: 'left'});
+    io.emit('users-changed', {user: socket.nickname, event: 'left'});
   });
  
   socket.on('set-nickname', (nickname) => {
-    socket.nickname = decrypt(nickname);
-    io.emit('users-changed', {user: encrypt(nickname), event: 'joined'});    
+    socket.nickname = nickname;
+    io.emit('users-changed', {user: socket.nickname, event: 'joined'});    
   });
 
   socket.on('add-private-message', (message) => {
-    io.emit('private-message', {text: message.encrypt(text), from: socket.nickname, target: message.target, type: 'private', created: new Date()});
+    io.emit('private-message', {text: message.text, from: socket.nickname, target: message.target, type: 'private', created: new Date()});
   });
   
   socket.on('add-message', (message) => {
-    io.emit('message', {text: message.encrypt(text), from: socket.nickname, type: 'public', created: new Date()});    
+    io.emit('message', {text: message.text, from: socket.nickname, type: 'public', created: new Date()});    
   });
 
   socket.on('room', function(room) {
