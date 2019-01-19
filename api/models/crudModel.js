@@ -21,7 +21,11 @@ var User = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    rights: [{
+        type: String,
+        required: true
+    }]
 });
 
 var Comment = new Schema({
