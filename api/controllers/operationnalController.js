@@ -22,7 +22,7 @@ router.get('/snapshotId', function (req, res) {
     var options = {
         url: `https://${url}/api/atlas/v1.0/groups/${project_id}/clusters/${cluster_id}/snapshots`,
         auth: {
-            user: 'erwann44110@gmail.com',
+            user: username,
             pass: apiKey,
             sendImmediately: false
         }
