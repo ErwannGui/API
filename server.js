@@ -117,6 +117,9 @@ app.use('/api/users', UserController);
 var AuthController = require(__root + 'api/controllers/authController');
 app.use('/api/auth', AuthController);
 
+var operationnalController = require(__root + 'api/controllers/operationnalController');
+app.use('/api/ops', operationnalController);
+
 //app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
