@@ -16,7 +16,7 @@ var User = mongoose.model('User');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
 var config = require('../../config'); // get config file
-var db = require('./api/db');
+var db = require('../db');
 
 router.post('/login', function(req, res) {
 

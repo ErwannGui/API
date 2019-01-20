@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('config.json');
+const config = require('../config');
 var router = express.Router();
 
 function connect(username, password) {
@@ -27,19 +27,19 @@ exports.authToMongo = function() {
 	switch (rights) {
 		case "readWrite":
 			username = 'ionic';
-			password = config.passwords[rights];
+			password = config.rights;
 			break;
 		case "dbAdmin":
 			username = 'moderator';
-			password = config.passwords[rights];
+			password = config.rights;
 			break;
 		case "su":
 			username = 'admin';
-			password = config.passwords[rights];
+			password = config.rights;
 			break;
 		default:
 			username = 'guest';
-			password = config.passwords[rights];
+			password = config.read;
 			break;
 	}
 
