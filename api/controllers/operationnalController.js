@@ -11,13 +11,13 @@ router.use(bodyParser.urlencoded({ extended: true }));
 let apiKey = "8f9da56a-4131-473b-8545-98d2cfd8631f";
 let username = 'pierre.chene@ynov.com';
 
-let cluster_id = '5bbcb42dcf09a2891bdd2b9f';
+let cluster_id = 'Cours';
 let project_id = '5bbcb42dcf09a2891bdd2b9f';
-let url = 'cours-8uau7.mongodb.net/ionic';
+let url = 'cloud.mongodb.com';
 
 router.get('/getid', function (req, res) {
     var options = {
-        url: `http: //${url}/api/public/v1.0/groups/${project_id}cluster/clusters/${cluster_id}/snapshots`,
+        url: `http://${url}/api/atlas/v1.0/groups/${project_id}cluster/clusters/${cluster_id}/snapshots`,
         auth: {
             'user': 'pierre.chene@ynov.com',
             'pass': apiKey
@@ -40,7 +40,7 @@ router.get('/getid', function (req, res) {
 
 });
 
-router.get('/', function (req, res) {
+router.get('/temp', function (req, res) {
     var headers = {
         'Content-Type': 'application/json'
     };
