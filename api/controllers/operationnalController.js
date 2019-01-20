@@ -8,8 +8,6 @@ var VerifyToken = require(__root + 'api/controllers/verifyToken');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
-let apiKey = "8f9da56a-4131-473b-8545-98d2cfd8631f";
-let username = 'pierre.chene@ynov.com';
 
 let cluster_id = 'Cours';
 let project_id = '5bbcb42dcf09a2891bdd2b9f';
@@ -17,10 +15,9 @@ let url = 'cloud.mongodb.com';
 
 router.get('/getid', function (req, res) {
     var options = {
-        url: `http://${url}/api/atlas/v1.0/groups/${project_id}cluster/clusters/${cluster_id}/snapshots`,
+        url: `https://${url}/api/atlas/v1.0/groups/${project_id}/clusters/${cluster_id}/snapshots`,
         auth: {
-            'user': 'pierre.chene@ynov.com',
-            'pass': apiKey
+            sendImmediately: false
         }
     };
 
@@ -31,7 +28,7 @@ router.get('/getid', function (req, res) {
         }
         else{
             res.status(500).send(body)
-            console.log("eeror : "+error)
+            console.log("error : "+error)
             console.log('response : '+ response)
         }
     }
