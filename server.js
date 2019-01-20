@@ -1,3 +1,5 @@
+global.rights = undefined;
+
 var express = require('express'),
     app = express(),
     port = process.env.PORT || 3000,
@@ -85,7 +87,7 @@ global.__root = __dirname + '/';
 
 var logFile = fs.createWriteStream('./api.log', {flags: 'a'});
 
-db.connect('ionic', 'ionic');
+db.authToMongo();
 
 /*mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost:27017/ionic');

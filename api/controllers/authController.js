@@ -16,6 +16,7 @@ var User = mongoose.model('User');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
 var config = require('../../config'); // get config file
+var db = require('../db');
 
 router.post('/login', function(req, res) {
 
@@ -26,6 +27,9 @@ router.post('/login', function(req, res) {
     // check if the password is valid
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+
+    rights = user.rights[1];
+    db.authToMongo();
     
     // if user is found and password is valid
     // create a token
@@ -51,10 +55,14 @@ router.post('/register', function(req, res) {
     firstname : req.body.firstname,
     lastname : req.body.lastname,
     email : req.body.email,
-    password : hashedPassword
+    password : hashedPassword,
+    rights : ["readWrite"]
   }, 
   function (err, user) {
     if (err) return res.status(500).send("There was a problem registering the user`.");
+
+    rights = user.rights[1];
+    db.authToMongo();
 
     // if user is registered without errors
     // create a token
