@@ -1,4 +1,5 @@
 global.rights = undefined;
+global.__root = __dirname + '/';
 
 var express = require('express'),
     app = express(),
@@ -80,10 +81,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
   next();
 });
-
-
-// mongoose instance connection url connection
-global.__root = __dirname + '/';
 
 var logFile = fs.createWriteStream('./api.log', {flags: 'a'});
 

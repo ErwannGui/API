@@ -1,4 +1,3 @@
-
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -31,6 +30,10 @@ var User = new Schema({
 var Comment = new Schema({
     film: {
         type: String,
+        required: true
+    },
+    user_id: {
+        type: Number,
         required: true
     },
     content: {
