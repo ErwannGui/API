@@ -10,7 +10,7 @@ var express = require('express'),
 
 var db = require('./api/db');
 var fs = require('fs')
-var morgan = require('morgan')
+//var morgan = require('morgan')
 //var cors = require('cors')
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -105,7 +105,7 @@ MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
    //client.close();
 });*/
 
-app.use(morgan('combined', { stream: logFile }));
+//app.use(morgan('combined', { stream: logFile }));
 
 var routes = require('./api/routes/crudRoutes'); //importing route
 routes(app); //register the route
