@@ -38,8 +38,8 @@ exports.authToMongo = function() {
 			password = config.rights;
 			break;
 		default:
-			username = 'guest';
-			password = config.read;
+			username = 'admin';
+			password = config.default;
 			break;
 	}
 
