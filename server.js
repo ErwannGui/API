@@ -9,67 +9,18 @@ var express = require('express'),
     bodyParser = require('body-parser');
 
 var db = require('./api/db');
-var fs = require('fs')
+var fs = require('fs');
 //var morgan = require('morgan')
 //var cors = require('cors')
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+// var socket = require('websocket/socket');
+// var crypto = require('crypto/aes');
+// socket.socket();
 
-// Nodejs encryption with CTR
-var crypto = require('crypto'),
-    algorithm = 'aes-256-ctr',
-    password = 'd6F3Efeq';
+// var hw = crypto.encrypt("hello world");
+// // outputs hello world
+// console.log(hw+' : '+decrypt(hw));
 
-function encrypt(text){
-  var cipher = crypto.createCipher(algorithm,password)
-  var crypted = cipher.update(text,'utf8','hex')
-  crypted += cipher.final('hex');
-  return crypted;
-}
- 
-function decrypt(text){
-  var decipher = crypto.createDecipher(algorithm,password)
-  var dec = decipher.update(text,'hex','utf8')
-  dec += decipher.final('utf8');
-  return dec;
-}
- 
-var hw = encrypt("hello world");
-// outputs hello world
-console.log(hw+' : '+decrypt(hw));
-
-// Sockets events
-
-io.on('connection', (socket) => {
-  
-  socket.on('disconnect', function(){
-    io.emit('users-changed', {user: socket.nickname, event: 'left'});
-  });
- 
-  socket.on('set-nickname', (nickname) => {
-    socket.nickname = nickname;
-    io.emit('users-changed', {user: socket.nickname, event: 'joined'});    
-  });
-
-  socket.on('add-private-message', (message) => {
-    io.emit('private-message', {text: message.text, from: socket.nickname, target: message.target, type: 'private', created: new Date()});
-  });
-  
-  socket.on('add-message', (message) => {
-    io.emit('message', {text: message.text, from: socket.nickname, type: 'public', created: new Date()});    
-  });
-
-  socket.on('room', function(room) {
-    socket.join(room);
-    
-	});
-
-  io.clients((error, clients) => {
-	  if (error) throw error;
-	  io.emit('clients', {clients: clients}); // => [6em3d4TJP8Et9EMNAAAA, G5p55dHhGgUnLUctAAAB]
-	});
-		
-});
 
 //app.use(cors());
 // Configire Request headers
@@ -119,6 +70,9 @@ app.use('/api/auth', AuthController);
 var operationnalController = require(__root + 'api/controllers/operationnalController');
 app.use('/api/ops', operationnalController);
 
+var socialController = require(__root + 'api/controllers/socialController');
+app.use('/api/social', socialController);
+
 //app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -127,6 +81,5 @@ app.use(function(req, res) {
 });
 
 http.listen(port);
-
 
 console.log('API running on port: ' + port);
